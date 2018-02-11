@@ -1,0 +1,930 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/28/2018 4:11:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-TNPB1E6"
+  DTS:CreatorName="DESKTOP-TNPB1E6\ARUNABHA"
+  DTS:DTSID="{38861C70-82ED-4AAF-A69B-8EF2C79F97C0}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2430.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{4505C4AA-FD83-4FB8-AFE8-00C9BDF8A2A6}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{B0AA58F8-A492-4119-BF23-36C86F08C2AD}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\My Projects\SSIS\Data\X Factor contestants.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete old records"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C094D7F6-96F3-402A-94CD-3D401BA3EE68}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete old records"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{959E7673-C8A0-4F08-B1C7-1846E9549078}"
+          SQLTask:SqlStatementSource="DELETE FROM [SampleSSISDB].[dbo].[tblXSeries]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import xFactor from excel to DB"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{84FBEA16-4DD1-440A-AE2B-F40823F508EA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import xFactor from excel to DB"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import xFactor from excel to DB\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import xFactor from excel to DB\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Series ]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Series ]"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Series ]"
+                      name="Series "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Winner ]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Winner ]"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Winner ]"
+                      name="Winner "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Start Date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Start Date]"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Start Date]"
+                      name="Start Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Finish Date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Finish Date]"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Finish Date]"
+                      name="Finish Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Gender]"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Gender]"
+                      name="Gender"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Series ]"
+                      dataType="r8"
+                      name="Series " />
+                    <externalMetadataColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Winner ]"
+                      dataType="wstr"
+                      length="255"
+                      name="Winner " />
+                    <externalMetadataColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Start Date]"
+                      dataType="date"
+                      name="Start Date" />
+                    <externalMetadataColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Finish Date]"
+                      dataType="date"
+                      name="Finish Date" />
+                    <externalMetadataColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      name="Gender" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Series ]"
+                      dataType="r8"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Series ]"
+                      name="Series " />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Winner ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Winner ]"
+                      name="Winner " />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Start Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Start Date]"
+                      name="Start Date" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Finish Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Finish Date]"
+                      name="Finish Date" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[Gender]"
+                      name="Gender" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import xFactor from excel to DB\Sample 3 Rows"
+              componentClassID="Microsoft.RowSampling"
+              contactInfo="Row Sampling;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Randomly samples a specific number of rows from an input data flow. For example, use it randomly select products to feature on your Web site."
+              name="Sample 3 Rows">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of rows in the sample."
+                  expressionType="Notify"
+                  name="SamplingValue">3</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the seed for the random number generator."
+                  name="SamplingSeed">0</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1]"
+                  name="Row Sampling Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1].Columns[Series ]"
+                      cachedDataType="r8"
+                      cachedName="Series "
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Series ]" />
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1].Columns[Winner ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Winner "
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Winner ]" />
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1].Columns[Start Date]"
+                      cachedDataType="date"
+                      cachedName="Start Date"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Start Date]" />
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1].Columns[Finish Date]"
+                      cachedDataType="date"
+                      cachedName="Finish Date"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Finish Date]" />
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Gender"
+                      lineageId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Gender]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows]"
+                  name="Selected Rows">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Output for rows in the sample"
+                      name="Selected">true</property>
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Series ]"
+                      dataType="r8"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Series ]"
+                      name="Series ">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Series ]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Winner ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Winner ]"
+                      name="Winner ">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Winner ]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Start Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Start Date]"
+                      name="Start Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Start Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Finish Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Finish Date]"
+                      name="Finish Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Finish Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Gender]"
+                      name="Gender">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Gender]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows]"
+                  name="Unselected Rows">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Output for rows in the sample"
+                      name="Selected">false</property>
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Series ]"
+                      dataType="r8"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Series ]"
+                      name="Series ">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Series ]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Winner ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Winner ]"
+                      name="Winner ">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Winner ]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Start Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Start Date]"
+                      name="Start Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Start Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Finish Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Finish Date]"
+                      name="Finish Date">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Finish Date]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Gender]"
+                      name="Gender">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output].Columns[Gender]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import xFactor from excel to DB\Selected Rows"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Selected Rows"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1].Columns[Series ]"
+                      cachedDataType="r8"
+                      cachedName="Series "
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Series ]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Series ]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1].Columns[Winner ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Winner "
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Winner ]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Winner ]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1].Columns[Start Date]"
+                      cachedDataType="date"
+                      cachedName="Start Date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Start Date]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Start Date]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1].Columns[Finish Date]"
+                      cachedDataType="date"
+                      cachedName="Finish Date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Finish Date]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Finish Date]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Gender"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows].Columns[Gender]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Gender]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 2]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Series ]"
+                      dataType="r8"
+                      lineageId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Series ]"
+                      name="Series " />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Winner ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Winner ]"
+                      name="Winner " />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Start Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Start Date]"
+                      name="Start Date" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Finish Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Finish Date]"
+                      name="Finish Date" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Selected Rows.Outputs[Union All Output 1].Columns[Gender]"
+                      name="Gender" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import xFactor from excel to DB\Unselected Rows"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Unselected Rows"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1].Columns[Series ]"
+                      cachedDataType="r8"
+                      cachedName="Series "
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Series ]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Series ]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1].Columns[Winner ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Winner "
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Winner ]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Winner ]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1].Columns[Start Date]"
+                      cachedDataType="date"
+                      cachedName="Start Date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Start Date]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Start Date]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1].Columns[Finish Date]"
+                      cachedDataType="date"
+                      cachedName="Finish Date"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Finish Date]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Finish Date]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Gender"
+                      lineageId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows].Columns[Gender]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Gender]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 2]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Series ]"
+                      dataType="r8"
+                      lineageId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Series ]"
+                      name="Series " />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Winner ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Winner ]"
+                      name="Winner " />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Start Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Start Date]"
+                      name="Start Date" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Finish Date]"
+                      dataType="date"
+                      lineageId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Finish Date]"
+                      name="Finish Date" />
+                    <outputColumn
+                      refId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import xFactor from excel to DB\Unselected Rows.Outputs[Union All Output 1].Columns[Gender]"
+                      name="Gender" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import xFactor from excel to DB.Paths[Excel Source Output]"
+              endId="Package\Import xFactor from excel to DB\Sample 3 Rows.Inputs[Row Sampling Input 1]"
+              name="Excel Source Output"
+              startId="Package\Import xFactor from excel to DB\Excel Source.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Import xFactor from excel to DB.Paths[Selected Rows]"
+              endId="Package\Import xFactor from excel to DB\Selected Rows.Inputs[Union All Input 1]"
+              name="Selected Rows"
+              startId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Selected Rows]" />
+            <path
+              refId="Package\Import xFactor from excel to DB.Paths[Unselected Rows]"
+              endId="Package\Import xFactor from excel to DB\Unselected Rows.Inputs[Union All Input 1]"
+              name="Unselected Rows"
+              startId="Package\Import xFactor from excel to DB\Sample 3 Rows.Outputs[Unselected Rows]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{33586F2D-5232-46F6-99AD-43D95AC43972}"
+      DTS:From="Package\Delete old records"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import xFactor from excel to DB" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Delete old records"
+          TopLeft="474,103" />
+        <NodeLayout
+          Size="231,42"
+          Id="Package\Import xFactor from excel to DB"
+          TopLeft="468.5,242.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="556.5,145">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="27.5,97.5"
+              Start="0,0"
+              End="27.5,90">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.75"
+                    Point2="0,48.75"
+                    Point3="4,48.75" />
+                  <mssgle:LineSegment
+                    End="23.5,48.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23.5,48.75"
+                    Point2="27.5,48.75"
+                    Point3="27.5,52.75" />
+                  <mssgle:LineSegment
+                    End="27.5,90" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Import xFactor from excel to DB">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Import xFactor from excel to DB\Excel Source"
+          TopLeft="458.5,87.5" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Import xFactor from excel to DB\Sample 3 Rows"
+          TopLeft="457.5,217.5" />
+        <EdgeLayout
+          Id="Package\Import xFactor from excel to DB.Paths[Excel Source Output]"
+          TopLeft="530.5,129.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,88"
+              Start="0,0"
+              End="0,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Import xFactor from excel to DB\Selected Rows"
+          TopLeft="325,337" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Import xFactor from excel to DB\Unselected Rows"
+          TopLeft="652,342" />
+        <EdgeLayout
+          Id="Package\Import xFactor from excel to DB.Paths[Selected Rows]"
+          TopLeft="509.166666666667,259.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-110.666666666667,77.5"
+              Start="0,0"
+              End="-110.666666666667,70">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.4875491480996" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.4875491480996"
+                    Point2="0,31.4875491480996"
+                    Point3="-4,31.4875491480996" />
+                  <mssgle:LineSegment
+                    End="-106.666666666667,31.4875491480996" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-106.666666666667,31.4875491480996"
+                    Point2="-110.666666666667,31.4875491480996"
+                    Point3="-110.666666666667,35.4875491480996" />
+                  <mssgle:LineSegment
+                    End="-110.666666666667,70" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-96.6245638020833,36.4875491480996,82.5824609375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Import xFactor from excel to DB.Paths[Unselected Rows]"
+          TopLeft="556.833333333333,259.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="174.666666666667,82.5"
+              Start="0,0"
+              End="174.666666666667,75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.519003931848" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.519003931848"
+                    Point2="0,33.519003931848"
+                    Point3="4,33.519003931848" />
+                  <mssgle:LineSegment
+                    End="170.666666666667,33.519003931848" />
+                  <mssgle:CubicBezierSegment
+                    Point1="170.666666666667,33.519003931848"
+                    Point2="174.666666666667,33.519003931848"
+                    Point3="174.666666666667,37.519003931848" />
+                  <mssgle:LineSegment
+                    End="174.666666666667,75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="40.5271028645833,38.519003931848,93.6124609375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import xFactor from excel to DB\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
