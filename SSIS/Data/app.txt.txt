@@ -1,4 +1,4 @@
 AppName | Rating | Summary
 Temple Run | 8 | Stupid Game. This is to test that only 50 characters are inserted into DB. When it is more than 50 characters, it will automatically trim to 50 characters
 BBC News | 9 | News Channel
-Scramble | 7 | Addictive word Game
+Scramble | 7 | Addictive word Game for myfirstbranch
